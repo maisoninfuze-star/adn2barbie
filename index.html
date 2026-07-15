@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADN 2 Barber — Coiffeur · Barbier · Laval, QC</title>
+<meta name="description" content="ADN 2 Barber — coiffeur barbier à Laval. Coupes propres, dégradés précis, barbe soignée. 203 Boulevard des Laurentides. (450) 933-4664.">
+<meta property="og:title" content="ADN 2 Barber — Laval">
+<meta property="og:description" content="L'art de la coupe, gravé dans l'ADN. Coiffeur · Barbier à Laval, QC.">
+<meta property="og:type" content="business.business">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('anim');</script>
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-soft:#171719;
+    --ink:#ece4d6;
+    --ink-70:rgba(236,228,214,0.70);
+    --ink-55:rgba(236,228,214,0.55);
+    --ink-45:rgba(236,228,214,0.45);
+    --line:rgba(236,228,214,0.10);
+    --gold:#c4a35e;
+    --gold-hi:#dcbd7e;
+    --serif:'Cormorant Garamond',serif;
+    --sans:'Hanken Grotesk',sans-serif;
+    --mono:'Space Mono',monospace;
+    --e-expo:cubic-bezier(.16,1,.3,1);
+    --e-quint:cubic-bezier(.22,1,.36,1);
+    /* z-index scale */
+    --z-content:1; --z-nav:60; --z-progress:70; --z-grain:9990;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;overflow-x:hidden;line-height:1.65}
+  ::selection{background:var(--gold);color:var(--bg)}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  section[id]{scroll-margin-top:88px}
+
+  /* film grain — analog depth */
+  body::after{content:'';position:fixed;inset:0;z-index:var(--z-grain);pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+
+  /* scroll progress hairline */
+  .scroll-progress{position:fixed;top:0;left:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold-hi));
+    transform:scaleX(0);transform-origin:left;z-index:var(--z-progress);will-change:transform}
+
+  /* shared type */
+  .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold)}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-55)}
+  .display{font-family:var(--serif);font-weight:500;letter-spacing:-0.015em;line-height:1;color:var(--ink);text-wrap:balance}
+  .italic{font-family:var(--serif);font-style:italic;color:var(--ink-70);text-wrap:pretty}
+
+  /* buttons */
+  .btn{position:relative;display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:0.16em;text-transform:uppercase;
+    text-decoration:none;padding:18px 34px;overflow:hidden;transition:transform .35s var(--e-expo),box-shadow .35s var(--e-expo),color .35s var(--e-expo),background .25s,border-color .25s;cursor:pointer}
+  .btn-gold{color:var(--bg);background:var(--gold);border:1px solid var(--gold)}
+  .btn-gold::after{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,0.5),transparent);transform:skewX(-18deg);transition:left .6s var(--e-expo)}
+  .btn-gold:hover{background:var(--gold-hi);border-color:var(--gold-hi);transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(196,163,94,0.65)}
+  .btn-gold:hover::after{left:140%}
+  .btn-ghost{color:var(--ink);border:1px solid rgba(236,228,214,0.35);background:none;z-index:0}
+  .btn-ghost::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;
+    transition:transform .42s var(--e-expo);z-index:-1}
+  .btn-ghost:hover{color:var(--bg);border-color:var(--gold);transform:translateY(-2px)}
+  .btn-ghost:hover::before{transform:scaleX(1)}
+  .btn:active{transform:translateY(0) scale(0.98)}
+
+  /* ===== NAV ===== */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:var(--z-nav);display:flex;align-items:center;justify-content:space-between;
+    padding:18px 6vw;background:rgba(10,10,11,0);border-bottom:1px solid transparent;
+    transition:background .45s var(--e-quint),backdrop-filter .45s,border-color .45s,padding .45s var(--e-quint)}
+  header.nav::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(10,10,11,0.65),rgba(10,10,11,0));opacity:1;transition:opacity .45s}
+  header.nav.scrolled{background:rgba(10,10,11,0.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom-color:rgba(236,228,214,0.12);padding:13px 6vw}
+  header.nav.scrolled::before{opacity:0}
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+  .brand img{width:38px;height:38px;object-fit:cover;border-radius:50%;box-shadow:0 0 0 1px rgba(196,163,94,0.35),0 6px 18px -8px rgba(0,0,0,0.8);transition:box-shadow .4s,transform .4s var(--e-expo)}
+  .brand:hover img{transform:rotate(-6deg) scale(1.05);box-shadow:0 0 0 1px var(--gold),0 8px 22px -8px rgba(196,163,94,0.5)}
+  .brand .wm{font-family:var(--mono);font-size:14px;letter-spacing:0.34em;font-weight:700}
+  .brand .wm .dot{color:var(--gold)}
+  .nav-links{display:flex;align-items:center;gap:42px}
+  .nav-links a{position:relative;font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-70);text-decoration:none;transition:color .3s}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;height:1px;width:100%;background:var(--gold);
+    transform:scaleX(0);transform-origin:right;transition:transform .35s var(--e-expo)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-links a.active{color:var(--gold)}
+  .nav-links a.active::after{transform:scaleX(1);transform-origin:left;background:var(--gold)}
+  .nav-right{display:flex;align-items:center;gap:20px}
+  .lang{display:flex;align-items:center;gap:2px;font-family:var(--mono);font-size:12px;letter-spacing:0.1em}
+  .lang button{background:none;border:none;cursor:pointer;color:var(--ink-45);font-family:inherit;font-size:inherit;padding:4px 6px;transition:color .25s}
+  .lang button:hover{color:var(--ink-70)}
+  .lang button.active{color:var(--gold)}
+  .lang .sep{color:rgba(236,228,214,0.3)}
+  .nav-call{position:relative;overflow:hidden;font-family:var(--mono);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:12px 22px;text-decoration:none;transition:background .25s,transform .3s var(--e-expo),box-shadow .3s}
+  .nav-call::after{content:'';position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.5),transparent);transform:skewX(-18deg);transition:left .6s var(--e-expo)}
+  .nav-call:hover{background:var(--gold-hi);transform:translateY(-1px);box-shadow:0 10px 24px -12px rgba(196,163,94,0.6)}
+  .nav-call:hover::after{left:140%}
+  .menu-toggle{display:none;background:none;border:1px solid rgba(236,228,214,0.3);color:var(--ink);width:42px;height:38px;cursor:pointer;font-size:16px;align-items:center;justify-content:center;transition:border-color .25s,color .25s}
+  .menu-toggle:hover{border-color:var(--gold);color:var(--gold)}
+  #mobile-nav{display:none}
+
+  /* ===== HERO ===== */
+  .hero{display:flex;position:relative;min-height:100vh;align-items:flex-end;padding:0 6vw 13vh;overflow:hidden}
+  .hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transform:scale(1.05);will-change:transform,opacity}
+  .hero video.bg{will-change:auto;background:#0a0a0b}
+  .hero .scrim{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(102deg, rgba(9,9,10,0.86) 0%, rgba(9,9,10,0.5) 40%, rgba(9,9,10,0.08) 68%, rgba(20,16,10,0) 100%),
+              linear-gradient(180deg, rgba(10,10,11,0) 50%, rgba(9,9,10,0.82) 86%, #0a0a0b 100%)}
+  .hero .glow{position:absolute;left:6vw;bottom:18vh;width:min(620px,60vw);height:380px;z-index:1;pointer-events:none;
+    background:radial-gradient(60% 60% at 30% 60%, rgba(196,163,94,0.20), rgba(196,163,94,0) 70%);filter:blur(10px)}
+  .hero .inner{position:relative;z-index:2;max-width:1100px}
+  .hero h1{font-size:clamp(52px,8vw,118px);line-height:0.96;max-width:14ch;margin-top:30px}
+  .hero .sub{font-size:clamp(22px,2.4vw,32px);margin-top:28px;max-width:38ch}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:48px}
+  .scroll-hint{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--ink-45)}
+  .scroll-hint .bar{width:1px;height:46px;background:linear-gradient(180deg,var(--gold),transparent);position:relative;overflow:hidden}
+  .scroll-hint .bar::after{content:'';position:absolute;top:-46px;left:0;width:100%;height:46px;background:var(--gold);animation:scrollDot 2.2s var(--e-quint) infinite}
+  @keyframes scrollDot{0%{transform:translateY(0)}60%,100%{transform:translateY(92px)}}
+
+  /* ===== MARQUEE ===== */
+  .marquee{position:relative;overflow:hidden;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(196,163,94,0.04),rgba(196,163,94,0))}
+  .marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee span{font-family:var(--serif);font-style:italic;font-size:clamp(24px,3vw,40px);color:var(--ink);padding:0 30px;white-space:nowrap}
+  .marquee span .star{color:var(--gold);font-style:normal;font-family:var(--mono);font-size:0.5em;vertical-align:middle;margin:0 4px}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ===== SERVICES ===== */
+  .services{padding:clamp(110px,14vh,170px) 6vw;border-top:1px solid rgba(236,228,214,0.08);
+    background:radial-gradient(120% 80% at 50% 0%, rgba(196,163,94,0.06) 0%, rgba(196,163,94,0) 55%)}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 70px}
+  .section-head .eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:22px}
+  .section-head .eyebrow::before,.section-head .eyebrow::after{content:'';width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+  .section-head .eyebrow::after{background:linear-gradient(90deg,var(--gold),transparent)}
+  .section-head h2{font-size:clamp(46px,5.5vw,84px)}
+  .section-head .italic{font-size:clamp(19px,1.7vw,24px);line-height:1.5;margin-top:22px;color:rgba(236,228,214,0.66)}
+  .menu-card{max-width:840px;margin:0 auto;padding:18px 64px 30px;border:1px solid rgba(196,163,94,0.3);
+    background:linear-gradient(180deg, rgba(196,163,94,0.05) 0%, rgba(196,163,94,0) 36%);position:relative}
+  .menu-card .tick{position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:54px;height:2px;background:var(--gold)}
+  .menu-row{position:relative;display:flex;align-items:baseline;gap:22px;padding:30px 0;border-bottom:1px solid rgba(236,228,214,0.1)}
+  .menu-row:last-child{border-bottom:none}
+  .menu-row::before{content:'';position:absolute;inset:0 -28px;z-index:0;opacity:0;transition:opacity .35s var(--e-quint);
+    background:linear-gradient(90deg,rgba(196,163,94,0.10),rgba(196,163,94,0) 70%)}
+  .menu-row:hover::before{opacity:1}
+  .menu-row>*{position:relative;z-index:1}
+  .menu-row .name{font-family:var(--serif);font-size:clamp(28px,3vw,36px);color:var(--ink);white-space:nowrap;transition:color .3s}
+  .menu-row:hover .name{color:#fff}
+  .menu-row .svc{display:inline-flex;align-items:baseline;gap:14px;white-space:nowrap}
+  .menu-row .dur{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-45);transition:color .3s}
+  .menu-row:hover .dur{color:var(--ink-55)}
+  .menu-row .leader{flex:1;align-self:flex-end;margin-bottom:11px;border-bottom:1px dotted rgba(196,163,94,0.45);transition:border-color .3s}
+  .menu-row:hover .leader{border-bottom-color:var(--gold)}
+  .menu-row .price{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--gold);letter-spacing:0.02em;white-space:nowrap;transition:color .3s,transform .3s var(--e-expo)}
+  .menu-row:hover .price{color:var(--gold-hi);transform:translateX(-3px)}
+  .menu-row .titlewrap{display:flex;align-items:baseline;gap:14px;white-space:nowrap}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--bg);background:var(--gold);padding:4px 9px;transform:translateY(-4px)}
+
+  /* ===== ABOUT ===== */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center;padding:clamp(100px,12vh,150px) 6vw;border-top:1px solid var(--line)}
+  .about .photo{position:relative;aspect-ratio:4/5;overflow:hidden}
+  .about .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--e-expo)}
+  .about .photo:hover img{transform:scale(1.05)}
+  .about .photo::after{content:'';position:absolute;inset:0;border:1px solid rgba(196,163,94,0.25);pointer-events:none}
+  .about .eyebrow{display:block;letter-spacing:0.3em;margin-bottom:24px}
+  .about h2{font-size:clamp(40px,4.6vw,68px);line-height:1.02;letter-spacing:-0.01em}
+  .about p{font-family:var(--serif);font-size:clamp(20px,1.9vw,27px);line-height:1.55;color:rgba(236,228,214,0.82);margin-top:30px;max-width:42ch;text-wrap:pretty}
+  .stats{display:flex;gap:56px;margin-top:54px}
+  .stats .num{font-family:var(--serif);font-size:clamp(44px,4vw,56px);color:var(--gold);line-height:1}
+  .stats .cap{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-55);margin-top:8px}
+
+  /* ===== GALLERY ===== */
+  .gallery{padding:clamp(100px,12vh,150px) 6vw;border-top:1px solid var(--line)}
+  .gallery .head{margin-bottom:64px}
+  .gallery .eyebrow{display:block;letter-spacing:0.3em;margin-bottom:18px}
+  .gallery h2{font-size:clamp(44px,5.5vw,80px);letter-spacing:-0.01em}
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:230px;gap:18px}
+  .g-item{position:relative;overflow:hidden}
+  .g-item img{width:100%;height:100%;object-fit:cover;outline:1px solid rgba(236,228,214,0.10);outline-offset:-1px;transition:transform 1s var(--e-expo)}
+  .g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,10,11,0.72),rgba(10,10,11,0) 55%);opacity:0;transition:opacity .45s}
+  .g-item figcaption{position:absolute;left:18px;bottom:16px;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:0.18em;
+    text-transform:uppercase;color:var(--ink);opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s var(--e-expo)}
+  .g-item figcaption::before{content:'';display:inline-block;width:16px;height:1px;background:var(--gold);vertical-align:middle;margin-right:9px}
+  .g-item:hover img{transform:scale(1.07)}
+  .g-item:hover::after{opacity:1}
+  .g-item:hover figcaption{opacity:1;transform:none}
+  .g-big{grid-column:span 2;grid-row:span 2}
+  .g-wide{grid-column:span 4}
+  .g-2{grid-column:span 2}
+
+  /* ===== FAQ ===== */
+  .faq{padding:clamp(100px,12vh,150px) 6vw;border-top:1px solid var(--line);
+    background:radial-gradient(120% 80% at 50% 0%, rgba(196,163,94,0.05) 0%, rgba(196,163,94,0) 55%)}
+  .faq-wrap{max-width:880px;margin:0 auto}
+  .faq-list{margin-top:18px;border-top:1px solid rgba(236,228,214,0.1)}
+  .faq-item{border-bottom:1px solid rgba(236,228,214,0.1)}
+  .faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:28px;
+    background:none;border:none;cursor:pointer;text-align:left;padding:30px 4px;color:var(--ink);transition:color .3s}
+  .faq-q:hover{color:var(--gold)}
+  .faq-qtext{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.2}
+  .faq-icon{position:relative;width:18px;height:18px;flex:none}
+  .faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--gold);transition:transform .4s var(--e-expo),opacity .3s}
+  .faq-icon::before{left:50%;top:0;width:1.6px;height:100%;transform:translateX(-50%)}
+  .faq-icon::after{top:50%;left:0;height:1.6px;width:100%;transform:translateY(-50%)}
+  .faq-item.open .faq-icon::before{transform:translateX(-50%) scaleY(0)}
+  .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--e-expo)}
+  .faq-item.open .faq-a{grid-template-rows:1fr}
+  .faq-a-inner{overflow:hidden}
+  .faq-a p{font-family:var(--sans);font-weight:300;font-size:clamp(16px,1.2vw,18px);line-height:1.75;
+    color:var(--ink-70);max-width:62ch;padding:0 4px 32px}
+
+  /* ===== CONTACT ===== */
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:stretch;padding:clamp(100px,12vh,150px) 6vw;border-top:1px solid var(--line)}
+  .contact .info{display:flex;flex-direction:column;justify-content:center}
+  .contact .eyebrow{display:block;letter-spacing:0.3em;margin-bottom:24px}
+  .contact h2{font-size:clamp(44px,5.5vw,80px);letter-spacing:-0.01em}
+  .contact-list{margin-top:44px;display:flex;flex-direction:column;gap:28px}
+  .contact-list>div{position:relative;padding-left:22px}
+  .contact-list>div::before{content:'';position:absolute;left:0;top:3px;width:7px;height:7px;border:1px solid var(--gold);transform:rotate(45deg)}
+  .contact-list .label{display:block;margin-bottom:8px}
+  .contact-list .val{font-family:var(--serif);font-size:26px;color:var(--ink);text-decoration:none;line-height:1.35}
+  a.val{transition:color .25s}
+  a.val:hover{color:var(--gold)}
+  .contact .cta-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:48px}
+  .map{position:relative;min-height:440px;border:1px solid rgba(236,228,214,0.14);overflow:hidden}
+  .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(0.4) invert(0.9) hue-rotate(180deg) contrast(0.9)}
+
+  /* ===== FOOTER ===== */
+  footer{padding:80px 6vw 56px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px}
+  footer .brand img{width:42px;height:42px}
+  .foot-links{display:flex;gap:30px;font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
+  .foot-links a{position:relative;color:var(--ink-70);text-decoration:none;transition:color .25s}
+  .foot-links a:hover{color:var(--gold)}
+  .copy{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:rgba(236,228,214,0.4)}
+
+  /* ===== MOTION: hero load choreography ===== */
+  html.anim .hero img.bg{animation:heroFade 1.6s ease both, kenburns 30s ease-in-out infinite alternate}
+  html.anim .hero video.bg{animation:heroFade 1.6s ease both}
+  @keyframes heroFade{from{opacity:0}to{opacity:1}}
+  @keyframes kenburns{from{transform:scale(1.04)}to{transform:scale(1.13) translate(-2%,-1.5%)}}
+  html.anim .h-eyebrow{animation:rise .9s var(--e-expo) .15s both}
+  html.anim .h-title{animation:headReveal 1.1s var(--e-expo) .3s both}
+  html.anim .h-sub{animation:rise 1s var(--e-expo) .55s both}
+  html.anim .h-cta{animation:rise 1s var(--e-expo) .7s both}
+  html.anim .scroll-hint{animation:fadeIn 1s ease 1.4s both}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes headReveal{from{opacity:0;clip-path:inset(0 0 100% 0);transform:translateY(34px)}to{opacity:1;clip-path:inset(0 0 -14% 0);transform:none}}
+
+  /* ===== MOTION: scroll reveals (default visible; only gated when JS adds .anim) ===== */
+  html.anim .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--e-expo),transform .9s var(--e-expo)}
+  html.anim .reveal.in{opacity:1;transform:none}
+  html.anim .reveal-group>*{opacity:0;transform:translateY(22px);transition:opacity .8s var(--e-expo),transform .8s var(--e-expo);transition-delay:calc(var(--i,0)*70ms)}
+  html.anim .reveal-group.in>*{opacity:1;transform:none}
+  html.anim .grid.reveal-group>.g-item{clip-path:inset(0 0 100% 0);transition:opacity .9s var(--e-expo),transform .9s var(--e-expo),clip-path .9s var(--e-expo);transition-delay:calc(var(--i,0)*80ms)}
+  html.anim .grid.reveal-group.in>.g-item{clip-path:inset(0 0 0 0)}
+
+  /* ===== RESPONSIVE ===== */
+  @media(max-width:980px){
+    .about,.contact{grid-template-columns:1fr;gap:48px}
+    .about .photo{aspect-ratio:4/3}
+    .grid{grid-auto-rows:180px}
+    .hero .sub{max-width:30ch}
+  }
+  @media(max-width:860px){
+    .nav-links{display:none}
+    .nav-right .lang{display:none}
+    .menu-toggle{display:flex}
+    header.nav{padding:14px 6vw}
+    #mobile-nav.open{display:flex;flex-direction:column;position:fixed;top:66px;left:0;right:0;z-index:55;
+      background:rgba(10,10,11,0.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(236,228,214,0.12);padding:14px 6vw 24px}
+    #mobile-nav a{font-family:var(--mono);font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-70);
+      text-decoration:none;padding:16px 0;border-bottom:1px solid var(--line);transition:color .25s}
+    #mobile-nav a:hover{color:var(--gold)}
+    .mlang{display:flex;align-items:center;justify-content:space-between;padding-top:18px}
+    .mlang .label{margin:0}
+    .mlang .lang{display:flex}
+    .menu-card{padding:8px 26px 20px}
+    .scroll-hint{display:none}
+  }
+  @media(min-width:861px){ .mlang{display:none} }
+  @media(max-width:430px){ .brand .wm{display:none} }
+  @media(max-width:640px){
+    .menu-row{flex-wrap:wrap;gap:6px 14px}
+    .menu-row .leader{flex-basis:100%;order:3;display:none}
+    .menu-row .price{margin-left:auto}
+    .menu-row .titlewrap{white-space:normal}
+    .menu-row .name{white-space:normal}
+    .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+    .g-big{grid-column:span 2;grid-row:span 1}
+    .g-wide{grid-column:span 2}
+    .stats{gap:36px}
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce){
+    html.anim .reveal,html.anim .reveal-group>*,html.anim .grid.reveal-group>.g-item{opacity:1!important;transform:none!important;clip-path:none!important}
+    html.anim .hero .bg{animation:none!important;transform:none!important}
+    .marquee-track{animation:none!important}
+    .scroll-hint .bar::after{animation:none!important}
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progress"></div>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand">
+    <img src="assets/logo.png" alt="ADN 2 Barber">
+    <span class="wm">ADN<span class="dot">·</span>BARBER</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#services" data-fr="Services" data-en="Services">Services</a>
+    <a href="#about" data-fr="À propos" data-en="About">À propos</a>
+    <a href="#gallery" data-fr="Galerie" data-en="Gallery">Galerie</a>
+    <a href="#faq" data-fr="FAQ" data-en="FAQ">FAQ</a>
+    <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+  </nav>
+  <div class="nav-right">
+    <div class="lang">
+      <button data-lang-btn="fr" class="active">FR</button>
+      <span class="sep">/</span>
+      <button data-lang-btn="en">EN</button>
+    </div>
+    <a href="https://app.squareup.com/appointments/buyer/widget/yopwbznm2jdvvk/LQ1756YF3G3YP" target="_blank" rel="noopener" class="nav-call" data-fr="Réserver" data-en="Book">Réserver</a>
+    <button class="menu-toggle" aria-label="Menu" id="menuToggle">☰</button>
+  </div>
+</header>
+<nav id="mobile-nav">
+  <a href="#services" data-fr="Services" data-en="Services">Services</a>
+  <a href="#about" data-fr="À propos" data-en="About">À propos</a>
+  <a href="#gallery" data-fr="Galerie" data-en="Gallery">Galerie</a>
+  <a href="#faq" data-fr="FAQ" data-en="FAQ">FAQ</a>
+  <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+  <div class="mlang">
+    <span class="label" data-fr="Langue" data-en="Language">Langue</span>
+    <div class="lang">
+      <button data-lang-btn="fr" class="active">FR</button>
+      <span class="sep">/</span>
+      <button data-lang-btn="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<div id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <video class="bg" id="heroVideo" poster="assets/hero-interior.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+      <source src="assets/hero.mp4" type="video/mp4">
+    </video>
+    <div class="scrim"></div>
+    <div class="glow"></div>
+    <div class="inner">
+      <div class="eyebrow h-eyebrow" data-fr="Coiffeur · Barbier — Laval" data-en="Barber · Hairstylist — Laval">Coiffeur · Barbier — Laval</div>
+      <h1 class="display h-title" data-fr="L'art de la coupe, gravé dans l'ADN." data-en="The art of the cut, written in our DNA.">L'art de la coupe, gravé dans l'ADN.</h1>
+      <p class="sub italic h-sub" data-fr="Le soin comme signature. Le style comme identité." data-en="Care as signature. Style as identity.">Le soin comme signature. Le style comme identité.</p>
+      <div class="cta-row h-cta">
+        <a href="https://app.squareup.com/appointments/buyer/widget/yopwbznm2jdvvk/LQ1756YF3G3YP" target="_blank" rel="noopener" class="btn btn-gold" data-fr="Réserver en ligne" data-en="Book online">Réserver en ligne</a>
+        <a href="tel:+14509334664" class="btn btn-ghost" data-fr="Appeler" data-en="Call">Appeler</a>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span data-fr="Défiler" data-en="Scroll">Défiler</span>
+      <span class="bar"></span>
+    </div>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Coupe<span class="star">✦</span>Dégradé<span class="star">✦</span>Barbe<span class="star">✦</span>Design<span class="star">✦</span>Fade<span class="star">✦</span>Laval<span class="star">✦</span></span>
+      <span>Coupe<span class="star">✦</span>Dégradé<span class="star">✦</span>Barbe<span class="star">✦</span>Design<span class="star">✦</span>Fade<span class="star">✦</span>Laval<span class="star">✦</span></span>
+    </div>
+  </div>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="services">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-fr="Services & Tarifs" data-en="Services & Pricing">Services & Tarifs</span>
+      <h2 class="display" data-fr="La carte" data-en="The menu">La carte</h2>
+      <p class="italic" data-fr="Chaque coupe, faite avec précision, style et attention au détail." data-en="Every cut, done with precision, style, and attention to detail.">Chaque coupe, faite avec précision, style et attention au détail.</p>
+    </div>
+
+    <div class="menu-card reveal-group">
+      <div class="tick"></div>
+
+      <div class="menu-row" style="--i:0">
+        <span class="svc">
+          <span class="name" data-fr="Coupe ciseaux" data-en="Scissor cut">Coupe ciseaux</span>
+          <span class="dur">40 min</span>
+        </span>
+        <span class="leader"></span>
+        <span class="price">30&nbsp;$</span>
+      </div>
+
+      <div class="menu-row" style="--i:1">
+        <span class="svc">
+          <span class="titlewrap">
+            <span class="name" data-fr="Barbe et Dégradé" data-en="Beard & fade">Barbe et Dégradé</span>
+            <span class="badge" data-fr="POPULAIRE" data-en="POPULAR">POPULAIRE</span>
+          </span>
+          <span class="dur">45 min</span>
+        </span>
+        <span class="leader"></span>
+        <span class="price">30&nbsp;$</span>
+      </div>
+
+      <div class="menu-row" style="--i:2">
+        <span class="svc">
+          <span class="name" data-fr="Barbe" data-en="Beard">Barbe</span>
+          <span class="dur">15 min</span>
+        </span>
+        <span class="leader"></span>
+        <span class="price">15&nbsp;$</span>
+      </div>
+
+      <div class="menu-row" style="--i:3">
+        <span class="svc">
+          <span class="name" data-fr="Shampooing" data-en="Shampoo">Shampooing</span>
+          <span class="dur">10 min</span>
+        </span>
+        <span class="leader"></span>
+        <span class="price">5&nbsp;$</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="about reveal-group">
+    <div class="photo" style="--i:0">
+      <img src="assets/about-steam.jpg" alt="Soin chaud sous la lumière tamisée du salon">
+    </div>
+    <div style="--i:1">
+      <span class="eyebrow" data-fr="À propos" data-en="About">À propos</span>
+      <h2 class="display" data-fr="Dans notre ADN, le détail." data-en="In our DNA, the detail.">Dans notre ADN, le détail.</h2>
+      <p data-fr="Chez ADN 2 Barber, chaque coupe est faite avec précision, style et attention au détail. Un barber shop local à Laval pour un look propre, moderne et confiant." data-en="At ADN 2 Barber, every cut is made with precision, style, and attention to detail. A local barbershop in Laval for a clean, modern, and confident look.">Chez ADN 2 Barber, chaque coupe est faite avec précision, style et attention au détail. Un barber shop local à Laval pour un look propre, moderne et confiant.</p>
+      <div class="stats">
+        <div>
+          <div class="num">203</div>
+          <div class="cap" data-fr="Boul. des Laurentides, Laval" data-en="Boul. des Laurentides, Laval">Boul. des Laurentides, Laval</div>
+        </div>
+        <div>
+          <div class="num">15&nbsp;$+</div>
+          <div class="cap" data-fr="À partir de" data-en="Starting price">À partir de</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery" class="gallery">
+    <div class="head reveal">
+      <span class="eyebrow" data-fr="Galerie" data-en="Gallery">Galerie</span>
+      <h2 class="display" data-fr="Le travail" data-en="The work">Le travail</h2>
+    </div>
+    <div class="grid reveal-group">
+      <figure class="g-item g-big" style="--i:0">
+        <img src="assets/cut.jpg" alt="Coupe et dégradé aux ciseaux">
+        <figcaption data-fr="Coupe & ciseaux" data-en="Scissor cut">Coupe & ciseaux</figcaption>
+      </figure>
+      <figure class="g-item g-2" style="--i:1">
+        <img src="assets/interior-wide.jpg" alt="Espace barbier sous la lumière chaude">
+        <figcaption data-fr="L'atelier" data-en="The shop">L'atelier</figcaption>
+      </figure>
+      <figure class="g-item g-2" style="--i:2">
+        <img src="assets/about-steam.jpg" alt="Soin chaud, vapeur et lumière tamisée">
+        <figcaption data-fr="Soin chaud" data-en="Hot towel">Soin chaud</figcaption>
+      </figure>
+      <figure class="g-item g-2" style="--i:3">
+        <img src="assets/tools.jpg" alt="Outils du barbier alignés sur le cuir">
+        <figcaption data-fr="Les outils" data-en="The tools">Les outils</figcaption>
+      </figure>
+      <figure class="g-item g-wide" style="--i:4">
+        <img src="assets/cut.jpg" alt="Détail d'une coupe précise">
+        <figcaption data-fr="Le détail" data-en="The detail">Le détail</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="faq">
+    <div class="faq-wrap">
+      <div class="section-head reveal" style="text-align:left;margin:0 0 18px">
+        <span class="eyebrow" data-fr="Questions fréquentes" data-en="Frequently asked" style="display:block;margin-bottom:18px">Questions fréquentes</span>
+        <h2 class="display" data-fr="Bon à savoir" data-en="Good to know">Bon à savoir</h2>
+      </div>
+      <div class="faq-list reveal-group">
+        <div class="faq-item" style="--i:0">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-qtext" data-fr="Faut-il prendre rendez-vous ?" data-en="Do I need an appointment?">Faut-il prendre rendez-vous ?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p data-fr="Les walk-ins sont les bienvenus. Pour garantir votre plage horaire, réservez en ligne ou appelez-nous au (450) 933-4664." data-en="Walk-ins are welcome. To lock in your time slot, book online or give us a call at (450) 933-4664.">Les walk-ins sont les bienvenus. Pour garantir votre plage horaire, réservez en ligne ou appelez-nous au (450) 933-4664.</p>
+          </div></div>
+        </div>
+        <div class="faq-item" style="--i:1">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-qtext" data-fr="Quels modes de paiement acceptez-vous ?" data-en="What payment methods do you accept?">Quels modes de paiement acceptez-vous ?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p data-fr="Comptant, débit et cartes de crédit." data-en="Cash, debit, and credit cards.">Comptant, débit et cartes de crédit.</p>
+          </div></div>
+        </div>
+        <div class="faq-item" style="--i:2">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-qtext" data-fr="Combien de temps dure une coupe ?" data-en="How long does a cut take?">Combien de temps dure une coupe ?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p data-fr="Comptez environ 30 minutes pour une coupe, et 45 minutes pour une coupe avec barbe." data-en="Around 30 minutes for a cut, and 45 minutes for a cut with beard.">Comptez environ 30 minutes pour une coupe, et 45 minutes pour une coupe avec barbe.</p>
+          </div></div>
+        </div>
+        <div class="faq-item" style="--i:3">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-qtext" data-fr="Faites-vous les designs et motifs ?" data-en="Do you do designs and patterns?">Faites-vous les designs et motifs ?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p data-fr="Oui. Les designs débutent à 10 $ et peuvent s'ajouter à n'importe quelle coupe." data-en="Yes. Designs start at $10 and can be added to any cut.">Oui. Les designs débutent à 10 $ et peuvent s'ajouter à n'importe quelle coupe.</p>
+          </div></div>
+        </div>
+        <div class="faq-item" style="--i:4">
+          <button class="faq-q" aria-expanded="false">
+            <span class="faq-qtext" data-fr="Où êtes-vous situés ? Y a-t-il du stationnement ?" data-en="Where are you located? Is there parking?">Où êtes-vous situés ? Y a-t-il du stationnement ?</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p data-fr="Au 203 Boulevard des Laurentides, Laval (QC). Stationnement disponible sur place." data-en="At 203 Boulevard des Laurentides, Laval, QC. Parking is available on site.">Au 203 Boulevard des Laurentides, Laval (QC). Stationnement disponible sur place.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="contact">
+    <div class="info reveal">
+      <span class="eyebrow" data-fr="Contact" data-en="Contact">Contact</span>
+      <h2 class="display" data-fr="Passez nous voir." data-en="Drop by.">Passez nous voir.</h2>
+      <div class="contact-list">
+        <div>
+          <span class="label" data-fr="Adresse" data-en="Address">Adresse</span>
+          <div class="val">203 Boulevard des Laurentides, Laval, QC H7G 2T7</div>
+        </div>
+        <div>
+          <span class="label" data-fr="Téléphone" data-en="Phone">Téléphone</span>
+          <a href="tel:+14509334664" class="val">(450) 933-4664</a>
+        </div>
+        <div>
+          <span class="label" data-fr="Heures" data-en="Hours">Heures</span>
+          <div class="val" data-fr="Mar–Ven · 10h–20h   ·   Sam–Dim · 10h–17h   ·   Lun · Fermé" data-en="Tue–Fri · 10am–8pm   ·   Sat–Sun · 10am–5pm   ·   Mon · Closed">Mar–Ven · 10h–20h   ·   Sam–Dim · 10h–17h   ·   Lun · Fermé</div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a href="https://app.squareup.com/appointments/buyer/widget/yopwbznm2jdvvk/LQ1756YF3G3YP" target="_blank" rel="noopener" class="btn btn-gold" data-fr="Réserver en ligne" data-en="Book online">Réserver en ligne</a>
+        <a href="tel:+14509334664" class="btn btn-ghost" data-fr="Appeler" data-en="Call">Appeler</a>
+        <a href="https://wa.me/14509334664" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp</a>
+      </div>
+    </div>
+    <div class="map reveal">
+      <iframe src="https://www.google.com/maps?q=203+Boulevard+des+Laurentides,+Laval,+QC+H7G+2T7&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte — ADN 2 Barber, 203 Boulevard des Laurentides, Laval"></iframe>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <a href="#top" class="brand">
+      <img src="assets/logo.png" alt="ADN 2 Barber">
+      <span class="wm">ADN<span class="dot">·</span>BARBER</span>
+    </a>
+    <div class="foot-links">
+      <a href="#services" data-fr="Services" data-en="Services">Services</a>
+      <a href="#about" data-fr="À propos" data-en="About">À propos</a>
+      <a href="#gallery" data-fr="Galerie" data-en="Gallery">Galerie</a>
+      <a href="#faq" data-fr="FAQ" data-en="FAQ">FAQ</a>
+      <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+    </div>
+    <div class="copy">© 2026 ADN 2 BARBER · LAVAL, QC</div>
+  </footer>
+
+</div>
+
+<script>
+  // ===== FR / EN language toggle =====
+  (function(){
+    var translatables = document.querySelectorAll('[data-fr][data-en]');
+    var btns = document.querySelectorAll('[data-lang-btn]');
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      translatables.forEach(function(el){
+        el.textContent = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-fr');
+      });
+      btns.forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-lang-btn') === lang);
+      });
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang-btn')); });
+    });
+  })();
+
+  // ===== Mobile menu =====
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var menu = document.getElementById('mobile-nav');
+    toggle.addEventListener('click', function(){ menu.classList.toggle('open'); });
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ menu.classList.remove('open'); });
+    });
+  })();
+
+  // ===== FAQ accordion (single-open) =====
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item'));
+    items.forEach(function(item){
+      var btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', function(){
+        var isOpen = item.classList.contains('open');
+        items.forEach(function(other){
+          other.classList.remove('open');
+          other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+  })();
+
+  // ===== Hero background video (muted autoplay loop) =====
+  (function(){
+    var v = document.getElementById('heroVideo');
+    if(!v) return;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var wide = matchMedia('(min-width: 861px)');
+    var on = false;
+    function enable(){
+      // Mobile / reduced-motion: keep the poster still, never download the clip.
+      if(on || reduce || !wide.matches) return;
+      on = true;
+      v.preload = 'auto';
+      v.load();
+      var p = v.play();
+      if(p && p.catch) p.catch(function(){ /* autoplay blocked; retried on first interaction */ });
+    }
+    if(wide.addEventListener) wide.addEventListener('change', enable);
+    window.addEventListener('pointerdown', function(){
+      if(on){ var p = v.play(); if(p && p.catch) p.catch(function(){}); }
+    }, { once: true, passive: true });
+    enable();
+  })();
+
+  // ===== Scroll reveals =====
+  (function(){
+    var items = document.querySelectorAll('.reveal, .reveal-group');
+    if(!('IntersectionObserver' in window)){ items.forEach(function(el){el.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+
+  // ===== Nav state, scrollspy, progress bar =====
+  (function(){
+    var nav = document.getElementById('nav');
+    var progress = document.getElementById('progress');
+    var sections = ['services','about','gallery','faq','contact'].map(function(id){ return document.getElementById(id); });
+    var links = {};
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      var href = a.getAttribute('href'); if(href && href[0] === '#') links[href.slice(1)] = a;
+    });
+    var ticking = false;
+    function update(){
+      var y = window.scrollY || window.pageYOffset;
+      nav.classList.toggle('scrolled', y > 60);
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+      // scrollspy
+      var current = null, mid = y + window.innerHeight * 0.35;
+      sections.forEach(function(s){ if(s && s.offsetTop <= mid) current = s.id; });
+      Object.keys(links).forEach(function(id){ links[id].classList.toggle('active', id === current); });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }, { passive:true });
+    window.addEventListener('resize', update, { passive:true });
+    update();
+  })();
+</script>
+</body>
+</html>
